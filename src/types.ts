@@ -2,7 +2,7 @@ export interface ApiStatus {
   success: boolean;
   message: string;
   hostname: string;
-  time: number;
+  time?: number;
 }
 
 export interface ApiStatusData {
