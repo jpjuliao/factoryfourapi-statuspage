@@ -13,18 +13,51 @@ const StatusPage: React.FC = () => {
   const intervalDuration = 15000;
 
   useEffect(() => {
+
     const fetchApiStatus = async () => {
       for (const apiName of API_NAMES) {
         try {
-          const response = await axios.get<ApiStatus>(`https://api.factoryfour.com/${apiName}/health/status`);
+          
+          const response = await axios.get<ApiStatus>(
+            `https://api.factoryfour.com/${apiName}/health/status`
+          );
+          
           const { success, message, hostname, time } = response.data;
-          setApiStatus(prevStatus => ({ ...prevStatus, [apiName]: { success, message, hostname, time } }));
+          
+          setApiStatus(
+            prevStatus => (
+              { ...prevStatus, [apiName]: { 
+                success, message, hostname, time 
+              } }
+            )
+          );
+
         } catch (error: any) {
+
           if (error.response && error.response.status === 503) {
-            setApiStatus(prevStatus => ({ ...prevStatus, [apiName]: { success: false, message: 'API deprecated', hostname: '', time: Date.now() } }));
+            
+            setApiStatus(
+              prevStatus => (
+                { ...prevStatus, [apiName]: { 
+                  success: false, 
+                  message: 'API deprecated', 
+                  hostname: '', time: Date.now() 
+                } }
+              ));
+
           } else {
-            setApiStatus(prevStatus => ({ ...prevStatus, [apiName]: { success: false, message: 'ERROR', hostname: '', time: Date.now() } }));
+
+            setApiStatus(prevStatus => (
+              { ...prevStatus, [apiName]: { 
+                success: false, 
+                message: 'ERROR', 
+                hostname: '', 
+                time: Date.now() 
+              } }
+            ));
+
           }
+
         }
       }
     };
@@ -40,7 +73,6 @@ const StatusPage: React.FC = () => {
     <div className="container">
       <h1 className="title">FactoryFour API Status</h1>
       <CountdownTimer interval={intervalDuration} />
-
       <div className="grid">
         {Object.keys(apiStatus).map(apiName => (
           <div key={apiName} className="card">
