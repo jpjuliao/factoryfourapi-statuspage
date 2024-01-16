@@ -1,13 +1,6 @@
-import { useEffect, useRef, useCallback, Dispatch, SetStateAction } 
-from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-import { ApiStatus, ApiStatusData } from '../types';
-
-// Define the options for the health checker hook
-interface HealthCheckerOptions {
-  onStatusChange: Dispatch<SetStateAction<ApiStatusData>>;
-  onLoadingChange: Dispatch<SetStateAction<boolean>>;
-}
+import { ApiStatus, ApiStatusData, HealthCheckerOptions } from '../types';
 
 // List of API names to query for status
 const API_NAMES = [
@@ -17,7 +10,7 @@ const API_NAMES = [
 ];
 
 // Custom hook for monitoring the health status of APIs
-const useHealthChecker = ({ onStatusChange, onLoadingChange }: HealthCheckerOptions) => {
+const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthCheckerOptions) => {
   // Ref to store the latest version of fetchApiStatus
   const fetchApiStatusRef = useRef<() => Promise<void>>();
 
@@ -72,11 +65,11 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange }: HealthCheckerOpti
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchApiStatusRef.current?.();
-    }, 15000);
+    }, interval);
 
     // Clean up the interval when the component is unmounted
     return () => clearInterval(intervalId);
-  }, []);
+  }, [interval]);
 
   // Initial fetch of API status
   useEffect(() => {

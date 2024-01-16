@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface ApiStatus {
   success: boolean;
   message: string;
@@ -20,4 +22,10 @@ export interface DarkModeToggleProps {
 
 export interface StatusCardGridProps {
   apiStatus: ApiStatusData;
+}
+
+export interface HealthCheckerOptions {
+  onStatusChange: Dispatch<SetStateAction<ApiStatusData>>;
+  onLoadingChange: Dispatch<SetStateAction<boolean>>;
+  interval: number; 
 }

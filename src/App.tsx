@@ -6,6 +6,9 @@ import useHealthChecker from './hooks/useHealthChecker';
 import { ApiStatusData } from './types';
 import './StatusPage.css';
 
+// Health check time interval in milliseconds
+const HEALTH_CHECK_INTERVAL = 15000;
+
 const StatusPage: React.FC = () => {
 
   // State to manage loading status
@@ -26,6 +29,7 @@ const StatusPage: React.FC = () => {
   useHealthChecker({
     onStatusChange: setApiStatus,
     onLoadingChange: setLoading,
+    interval: HEALTH_CHECK_INTERVAL,
   });
 
   // Component render
@@ -38,7 +42,7 @@ const StatusPage: React.FC = () => {
         ) : (
           <>
             <StatusCardGrid apiStatus={apiStatus} />
-            <CountdownTimer interval={15000} />
+            <CountdownTimer interval={HEALTH_CHECK_INTERVAL} />
             <DarkModeToggle darkMode={darkMode} 
               onDarkModeChange={handleDarkModeChange} />  
           </>
