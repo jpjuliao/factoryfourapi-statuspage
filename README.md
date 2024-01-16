@@ -1,4 +1,50 @@
-# Getting Started with Create React App
+# FactoryFour Status Page
+
+## Overview
+
+FactoryFour Status Page is a React-based web application designed to monitor the health status of various FactoryFour APIs. The application provides a real-time display of API statuses, allowing users to stay informed about the health of critical services.
+
+## Architecture and Design
+
+### Components
+
+#### StatusPage Component (App.tsx)
+
+The `StatusPage` component serves as the main application component. It manages the loading status, dark mode, and API status. Key features include:
+
+- Loading Status: It displays a loading spinner when the application is fetching API statuses.
+- Dark Mode: Users can toggle between light and dark modes for a personalized viewing experience.
+- API Status Display: The `StatusCardGrid` component renders the health status of each API, and the `CountdownTimer` ensures periodic updates.
+- Dark Mode Toggle: The `DarkModeToggle` component provides a button to switch between light and dark modes.
+
+#### useHealthChecker Hook
+
+The `useHealthChecker` hook encapsulates the logic for fetching and updating API statuses. Key functionalities include:
+
+- Asynchronous Fetching: It fetches the status of each API asynchronously using Axios.
+- Periodic Updates: The hook employs `useEffect` to periodically update API statuses at a configurable interval.
+- Error Handling: Handles API deprecation and general errors gracefully, updating the status accordingly.
+
+### Design Patterns
+
+- Custom Hooks: The application utilizes custom hooks, such as `useHealthChecker`, to encapsulate logic and enhance reusability.
+- Functional Components: React functional components are employed for a more modular and concise code structure.
+
+## Development Details
+
+- API Names: The list of API names to query for status is stored in the `API_NAMES` constant.
+- State Management: React `useState` is used for managing loading, dark mode, and API status states.
+- Fetch Timeout Interval: The interval for updating API statuses is defined as a constant (`HEALTH_CHECK_INTERVAL`) in `App.tsx` and passed to the `useHealthChecker` hook.
+
+## Testing
+
+Testing is implemented using the `@testing-library/react` library. Test cases include:
+
+- Renders API Status After Loading: Verifies that API statuses are rendered after the loading phase.
+- Toggles Dark Mode: Checks whether dark mode toggles correctly when the `DarkModeToggle` component is clicked.
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
