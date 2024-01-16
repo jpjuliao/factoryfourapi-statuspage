@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CountdownTimerProps } from './types';
+import { CountdownTimerProps } from '../types';
 
 const CountdownTimer: React.FC<CountdownTimerProps> = ({ interval }) => {
 

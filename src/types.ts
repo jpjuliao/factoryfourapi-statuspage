@@ -12,3 +12,12 @@ export interface ApiStatusData {
 export interface CountdownTimerProps {
   interval: number;
 }
+
+export interface DarkModeToggleProps {
+  darkMode: boolean;
+  onDarkModeChange: (darkMode: boolean) => void;
+}
+
+export interface StatusCardGridProps {
+  apiStatus: ApiStatusData;
+}

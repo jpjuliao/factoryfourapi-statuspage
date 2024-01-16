@@ -1,27 +1,79 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ddd;
+}
+
+.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
 .container {
   max-width: 960px;
   margin: 0 auto;
   padding: 20px;
+  text-align: center;
 }
 
+
 .title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
 }
 
-.card {
-  border: 1px solid #ccc;
-  padding: 10px;
+.error {
+  background: red;
+}
+
+.healthy {
+  background: green;
 }
 
 .label {
   font-weight: bold;
-  margin-bottom: 5px;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.status {
+  font-weight: bold;
+}
+
+.format-time,
+.hostname {
+  font-size: 0.75rem;
+}
+
+.darkModeToggle {
+  margin-top: 1rem;
+}
+
+.card {
+  border: 1px solid #333;
+  border-radius: .25rem;
+  padding: 1rem;
+}
+
+/* Responsive grid for tablets */
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Responsive grid for mobile */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
