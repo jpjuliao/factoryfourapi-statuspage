@@ -7,7 +7,7 @@ import { ApiStatusData } from './types';
 import './StatusPage.css';
 
 // Health check time interval in milliseconds
-const HEALTH_CHECK_INTERVAL = 15000;
+const API_CHECK_INTERVAL = 15000;
 
 // List of API names to query for status
 const API_NAMES = [
@@ -39,7 +39,7 @@ const StatusPage: React.FC = () => {
     endpoints: API_NAMES,
     onStatusChange: setApiStatus,
     onLoadingChange: setLoading,
-    interval: HEALTH_CHECK_INTERVAL,
+    interval: API_CHECK_INTERVAL,
   });
 
   // Component render
@@ -52,7 +52,7 @@ const StatusPage: React.FC = () => {
         ) : (
           <>
             <CardsGrid cards={apiStatus} />
-            <CountdownTimer interval={HEALTH_CHECK_INTERVAL} />
+            <CountdownTimer interval={API_CHECK_INTERVAL} />
             <DarkModeToggle darkMode={darkMode} 
               onDarkModeChange={handleDarkModeChange} />  
           </>

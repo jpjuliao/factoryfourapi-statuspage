@@ -34,7 +34,7 @@ The `useApiChecker` hook encapsulates the logic for fetching and updating API st
 
 - API Names: The list of API names to query for status is stored in the `API_NAMES` constant.
 - State Management: React `useState` is used for managing loading, dark mode, and API status states.
-- Fetch Timeout Interval: The interval for updating API statuses is defined as a constant (`HEALTH_CHECK_INTERVAL`) in `App.tsx` and passed to the `useApiChecker` hook.
+- Fetch Timeout Interval: The interval for updating API statuses is defined as a constant (`API_CHECK_INTERVAL`) in `App.tsx` and passed to the `useApiChecker` hook.
 
 ## Testing
 
