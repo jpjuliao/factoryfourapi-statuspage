@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import StatusPage from './App';
 
-// Mock the useHealthChecker hook
-jest.mock('./hooks/useHealthChecker', () => {
+// Mock the useApiChecker hook
+jest.mock('./hooks/useApiChecker', () => {
   return {
     __esModule: true,
     default: ({ onStatusChange, onLoadingChange }) => {

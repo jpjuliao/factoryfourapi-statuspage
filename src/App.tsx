@@ -1,13 +1,20 @@
 import React, { useState, useCallback } from 'react';
 import CountdownTimer from './components/CountdownTimer';
 import DarkModeToggle from './components/DarkModeToggle';
-import StatusCardGrid from './components/StatusCardGrid';
-import useHealthChecker from './hooks/useHealthChecker';
+import CardsGrid from './components/CardsGrid';
+import useApiChecker from './hooks/useApiChecker';
 import { ApiStatusData } from './types';
 import './StatusPage.css';
 
 // Health check time interval in milliseconds
 const HEALTH_CHECK_INTERVAL = 15000;
+
+// List of API names to query for status
+const API_NAMES = [
+  'accounts', 'assets', 'customers', 'datapoints', 'devices', 'documents',
+  'forms', 'invites', 'media', 'messages', 'namespaces', 'orders', 'patients',
+  'relationships', 'rules', 'templates', 'users', 'workflows'
+];
 
 const StatusPage: React.FC = () => {
 
@@ -25,8 +32,11 @@ const StatusPage: React.FC = () => {
   // State to store the status of each API
   const [apiStatus, setApiStatus] = useState<ApiStatusData>({});
   
-  // Use the useHealthChecker hook
-  useHealthChecker({
+  // Use the useApiChecker hook
+  useApiChecker({
+    url: 'https://api.factoryfour.com/',
+    urlParams: '/health/status',
+    endpoints: API_NAMES,
     onStatusChange: setApiStatus,
     onLoadingChange: setLoading,
     interval: HEALTH_CHECK_INTERVAL,
@@ -41,7 +51,7 @@ const StatusPage: React.FC = () => {
           <div className="loading-spinner">Loading...</div>
         ) : (
           <>
-            <StatusCardGrid apiStatus={apiStatus} />
+            <CardsGrid cards={apiStatus} />
             <CountdownTimer interval={HEALTH_CHECK_INTERVAL} />
             <DarkModeToggle darkMode={darkMode} 
               onDarkModeChange={handleDarkModeChange} />  

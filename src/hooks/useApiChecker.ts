@@ -1,16 +1,9 @@
 import { useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
-import { ApiStatus, ApiStatusData, HealthCheckerOptions } from '../types';
-
-// List of API names to query for status
-const API_NAMES = [
-  'accounts', 'assets', 'customers', 'datapoints', 'devices', 'documents',
-  'forms', 'invites', 'media', 'messages', 'namespaces', 'orders', 'patients',
-  'relationships', 'rules', 'templates', 'users', 'workflows'
-];
+import { ApiStatus, ApiStatusData, ApiCheckerOptions } from '../types';
 
 // Custom hook for monitoring the health status of APIs
-const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthCheckerOptions) => {
+const useApiChecker = ({ endpoints, url, urlParams, onStatusChange, onLoadingChange, interval }: ApiCheckerOptions) => {
   // Ref to store the latest version of fetchApiStatus
   const fetchApiStatusRef = useRef<() => Promise<void>>();
 
@@ -18,7 +11,7 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthC
   const fetchSingleApiStatus = useCallback(async (serviceName: string): Promise<ApiStatus> => {
     try {
       const response = await axios.get<ApiStatus>(
-        `https://api.factoryfour.com/${serviceName}/health/status`);
+        `${url}${serviceName}${urlParams}`);
       return { ...response.data, time: Date.now() };
     } catch (error: any) {
       if (error.response && error.response.status === 503) {
@@ -29,14 +22,14 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthC
         time: Date.now() };
       }
     }
-  }, []);
+  }, [url, urlParams]);
 
   // Fetch the status of all APIs
   const fetchApiStatus = useCallback(async () => {
     try {
       // Fetch the status for all APIs concurrently
       const results = await Promise.all(
-        API_NAMES.map((serviceName) => fetchSingleApiStatus(serviceName)));
+        endpoints.map((serviceName) => fetchSingleApiStatus(serviceName)));
 
       // Create an object to store the results
       const apiStatusResult: ApiStatusData = {};
@@ -44,7 +37,7 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthC
       // Iterate through the results and populate the apiStatusResult object
       results.forEach((result, index) => {
         if (result) {
-          apiStatusResult[API_NAMES[index]] = result;
+          apiStatusResult[endpoints[index]] = result;
         }
       });
 
@@ -56,7 +49,7 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthC
       // Set loading to false after fetching is complete
       onLoadingChange(false);
     }
-  }, [fetchSingleApiStatus, onLoadingChange, onStatusChange]);
+  }, [endpoints, fetchSingleApiStatus, onLoadingChange, onStatusChange]);
 
   // Update the ref with the latest version of fetchApiStatus
   fetchApiStatusRef.current = fetchApiStatus;
@@ -77,4 +70,4 @@ const useHealthChecker = ({ onStatusChange, onLoadingChange, interval }: HealthC
   }, [fetchApiStatusRef]);
 };
 
-export default useHealthChecker;
+export default useApiChecker;

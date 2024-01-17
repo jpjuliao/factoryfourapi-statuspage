@@ -14,12 +14,12 @@ The `StatusPage` component serves as the main application component. It manages 
 
 - Loading Status: It displays a loading spinner when the application is fetching API statuses.
 - Dark Mode: Users can toggle between light and dark modes for a personalized viewing experience.
-- API Status Display: The `StatusCardGrid` component renders the health status of each API, and the `CountdownTimer` ensures periodic updates.
+- API Status Display: The `CardsGrid` component renders the health status of each API, and the `CountdownTimer` ensures periodic updates.
 - Dark Mode Toggle: The `DarkModeToggle` component provides a button to switch between light and dark modes.
 
-#### useHealthChecker Hook
+#### useApiChecker Hook
 
-The `useHealthChecker` hook encapsulates the logic for fetching and updating API statuses. Key functionalities include:
+The `useApiChecker` hook encapsulates the logic for fetching and updating API statuses. Key functionalities include:
 
 - Asynchronous Fetching: It fetches the status of each API asynchronously using Axios.
 - Periodic Updates: The hook employs `useEffect` to periodically update API statuses at a configurable interval.
@@ -27,14 +27,14 @@ The `useHealthChecker` hook encapsulates the logic for fetching and updating API
 
 ### Design Patterns
 
-- Custom Hooks: The application utilizes custom hooks, such as `useHealthChecker`, to encapsulate logic and enhance reusability.
+- Custom Hooks: The application utilizes custom hooks, such as `useApiChecker`, to encapsulate logic and enhance reusability.
 - Functional Components: React functional components are employed for a more modular and concise code structure.
 
 ## Development Details
 
 - API Names: The list of API names to query for status is stored in the `API_NAMES` constant.
 - State Management: React `useState` is used for managing loading, dark mode, and API status states.
-- Fetch Timeout Interval: The interval for updating API statuses is defined as a constant (`HEALTH_CHECK_INTERVAL`) in `App.tsx` and passed to the `useHealthChecker` hook.
+- Fetch Timeout Interval: The interval for updating API statuses is defined as a constant (`HEALTH_CHECK_INTERVAL`) in `App.tsx` and passed to the `useApiChecker` hook.
 
 ## Testing
 

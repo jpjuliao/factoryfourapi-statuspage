@@ -20,11 +20,14 @@ export interface DarkModeToggleProps {
   onDarkModeChange: (darkMode: boolean) => void;
 }
 
-export interface StatusCardGridProps {
-  apiStatus: ApiStatusData;
+export interface CardsGridProps {
+  cards: ApiStatusData;
 }
 
-export interface HealthCheckerOptions {
+export interface ApiCheckerOptions {
+  url: string;
+  urlParams: string,
+  endpoints: string[];
   onStatusChange: Dispatch<SetStateAction<ApiStatusData>>;
   onLoadingChange: Dispatch<SetStateAction<boolean>>;
   interval: number; 
